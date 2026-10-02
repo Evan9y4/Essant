@@ -1,0 +1,40 @@
+Lab 1 Report
+
+
+This is a small report about the programming language Essant
+
+Regex experessions:
+
+Numbers: [0-9]+(\.[0-9]+)?
+One or more of any numbers which can be optinally followed by a dot for decimals followed by one or more numbers
+
+Strings: "[^"]*"
+One quote followed by zero or more of any character that isn't a quote, until we hit a quote
+In the event that there ir no second quote, that is handled in the test cases file "tester.Essant"
+
+Identifiers: [A-Za-z_][A-Za-z0-9_]*
+After a lower/uppercase letter or an underscore, follow with zero or more lowercase/uppercase letters, numbers, and underscores
+
+The currently supported keywords are: if, else, or, and, for, while, true, false, var, null, print, return. 
+The assignment wasn't super descriptive on what kinds of keywords to have, so I used all of the keywords that I thought were essential.
+
+I'm a little unsure what is meant by "design choices compared to Lox", so I'll just go over a bunch of similarities and differences.
+Strings are denoted with ""
+Comments are denoted with //
+Essant currently doesn't support escape sequences in strings (This might change in the future).
+Is missing some keywords that Lox or other programming languages have: super, this, fun, class, def, printf, public, private, etc
+
+
+Now for the big one, I've never actually had someone download and run code I made on another computer, so I don't know what to say for setup instructions except for what I do
+Whenever I test REPL mode, i simply start the main file "Essant.py" in my Visual Studio and it pops open a terminal.
+If I need to run it with it file, I use Visual Studio's built in terminal, then I run the main file "Essant.py" with any other file as an argument
+
+If you are unable to get it to work please tell me immediately and I will come to the first Office Hours I can.
+Sorry that this wasn't that helpful for setup, i'm much better at it in person.
+
+
+
+For the test cases, All the cases, results, and purpose are included in "tester.Essant", which is available on the github directory. All the detail you need is in there
+
+For limitations, the only one I can think of is the fact that is doesn't support newlines just yet, even though the scanner knows how to deal with them.
+
