@@ -1,1 +1,249 @@
-print("Hooray! The test worked!")
+//Test file for Essant!!
+//Unfortunately, not truly automatic (you have to read over every output the program gives you), but entering this file as anargument for Essant should work
+
+
+//
+//Basic Operations
+//
+
+
++
+//Expected Result: PLUS + None | EOF None
+
+-
+//Expected Result: MINUS - None | EOF None
+
+*
+//Expected Result: STAR * None | EOF None
+
+//Im going to stop including the EOF parts now as they are always part of the output
+
+/
+//Expected Result: SLASH / None
+
+=
+//Expected Result: EQUAL = None
+
+==
+//Expected Result: EQUAL_EQUAL == None
+
+<
+//Expected Result: LESS < None
+
+<=
+//Expected Result: LESS_EQUAL <= None
+
+>
+//Expected Result: GREATER > None
+
+>=
+//Expected Result: GREATER_EQUAL >= None
+
+!
+//Expected Result: EXCLAMATION ! None
+
+!=
+//Expected Result: EXCLAMATION_EQUAL != None
+
+%
+//Expected Result: PERCENT % None
+
+
+
+//I included all punctuation together to make testing less tedious and it's also a great way to verify that the scanner knows when one token ends and another begins
+
+//(){};,.
+//Expected Result: LEFT_PAREN
+//RIGHT_PAREN
+//LEFT_BRACE
+//RIGHT_BRACE
+//SEMICOLON
+//COMMA
+//DOT
+//EOF
+
+
+
+
+//
+//KEYWORDS Just like the basic operations, they should all have their own type
+//
+
+if
+//Expected Result: IF if None
+
+else
+//Expected Result: ELSE else None
+
+and
+//Expected Result: AND and None
+
+or
+//Expected Result: OR or None
+
+for
+//Expected Result: FOR for None
+
+while
+//Expected Result: WHILE while None
+
+true
+//Expected Result: TRUE true None
+
+false
+//Expected Result: FALSE false None
+
+var
+//Expected Result: VAR var None
+
+null
+//Expected Result: NULL null None
+
+print
+//Expected Result: PRINT print None
+
+return
+//Expected Result: RETURN return None
+
+
+//I'm going to showcase it here, but EVERY keyword is case sensitive. If you do this to any of them they should be an identifier
+True
+//Expected Result: IDENTFIER True None
+
+
+//Another edge case like the one above. Even though it starts with the keyword, it should still be an identifer
+oreo
+//Expected Result: IDENTIFIER oreo None
+
+
+
+
+
+//
+//IDENTIFIERS
+//
+
+x
+//Expected Result: IDENTIFIER x None
+
+variable
+//Expected Result: IDENTIFIER variable None
+
+_
+//Expected Result: IDENTIFIER _ None
+
+abc123
+//Expected Result: IDENTIFIER abc123 None
+
+
+
+
+//
+//NUMBERS
+//
+
+
+123
+//Expected Result: NUMBER 123 123
+
+1234567890
+//Expected Result: NUMBER 1234567890 1234567890
+
+0
+//Expected Result: NUMBER 0 0
+
+3.14 20.5
+//Expected Result: NUMBER 3.14 3.14 | NUMBER 20.5 20.5
+
+123.
+//Expected Result: NUMBER 123 123 | DOT . None
+
+.28
+//Expected Result: DOT . None | NUMBER 28 28
+
+// This is the most intresting one in the number section
+
+123nag1
+//Expected Result: NUMBER 123 123 | IDENTIFIER nag1 None
+
+
+//
+//STRINGS! This is where the second and third result get important
+//
+
+
+
+
+//First of all, this should NOT be a string
+hello
+//Expected Result: IDENTIFIER hello None
+
+"Hello"
+//Expected Result: STRING "Hello" Hello  // Notice how the last two are different? That's important since the second value is "value" and the third is the "Literal"
+
+"hello nice people"
+//Expected Result: STRING "hello nice people" hello nice people
+
+">!!=+-"
+//Expected Result: STRING ">!!=+-" >!!=+-
+
+"519"
+//Expected Result: STRING "519" 519
+
+""
+//Expected Result: STRING "" //Notic how the third (Literal) is missing? Since it's an empty string, it should have no literal value
+
+
+
+
+
+
+
+
+//
+//EDGE CASES
+//
+
+
+//Now we get into some errors and some weird/useless inputs
+//Luckily, Essant will continue running even if the scanner encounters an error! :)
+
+
+//Unterminated string
+
+"hello
+//Expected Result: Unterminated string at line 1
+
+
+   //Just to be clear, this is just whitespace
+//Expected Result:  | EOF None   //It should come up with nothing on the first line, and the EOF should be the second line (as referenced by |)
+
+35 //This comment is stinky
+//Expected Result: NUMBER 35 35     //There should be no mention of the comment, just the number
+
+// All the current invalid characters are: @, #, ^, ?, ~, $, [] (brackets will most likely be added in later)
+
+$ //or any other invalid character
+//Expected Result: Unexpected character $ at line 1
+
+x^10
+//Expected Result: Unexpected character ^ at line 1 | IDENTIFIER x None | NUMBER 10 10
+
+
+
+//
+//A couple final bigger tests
+//
+
+
+var x = 10
+//Expected Result: VAR var None | IDENTIFIER x None | EQUAL = None | NUMBER 10 10
+
+x + 20
+//Expected Result: IDENTIFIER x None | PLUS + None | NUMBER 20 20
+
+while x >= 5;
+//Expected Result: WHILE while None | IDENTIFIER x None | GREATER_EQUAL >= None | NUMBER 5 5 | SEMICOLON ; None
+
+"Did you see" (Jamie) "Has" 57 "Dogs?"
+//Expected Result: STRING "Did you see" Did you see | LEFT_PAREN ( None | IDENTIFIER Jamie None | RIGHT_PAREN ) None | STRING "Has" Has | NUMBER 57 57 | STRING "DOGS?" Dogs?

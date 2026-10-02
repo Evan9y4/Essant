@@ -2,13 +2,14 @@
 
 #Importing sys so we can use the commmand line
 import sys
+from EssantScanner import Scanner
 
 
 # The interpreter
 class Essant:
     def __init__(self):
         # Create an error handler for essant
-        self.error_handler = errorhandler()
+        self.error_handler = ErrorHandler()
 
     #Giving Essant a file in the command line
     def run_file(self, path):
@@ -28,7 +29,7 @@ class Essant:
     def run_REPL(self):
         while True:
             try:
-                #This just create a little arrow in front of the input
+                #This just creates a little arrow in front of the input
                 code_line = input("--> ")
             except KeyboardInterrupt:
                 #Outputs a small message before exiting
@@ -42,11 +43,15 @@ class Essant:
     #This is where we actually "run" the language
     def run(self, source):
         print(source)
-        self.error_handler.error("Scanner Not Implemented")
+        scanner = Scanner(source, self.error_handler)
+        tokens = scanner.scan_tokens()
+
+        for token in tokens:
+            print(token)
 
 
 #This is the class that handles all the errors
-class errorhandler:
+class ErrorHandler:
     def __init__(self):
         self.has_error = False
 
