@@ -1,0 +1,45 @@
+Lab 2 report
+
+
+Essant uses syntactical grammer to form it's AST. 
+It uses Literals for Numbers, Strings, Booleans, and null,
+Unary for expressions with a single operator,
+Binary for performing arithmetic or using logic operators on two expressions,
+and parenthesis for grouping.
+
+essant uses a base class called Expr (for expression), all nodes are extended from that class.
+The Literal Node requires only one attribute, the literal value of a token.
+The Unary Node requires two attributes, on operator and an expression.
+The Binary Node requires three attributes, the expression on the left side of the operator, the chosen operator, and the expression on the right side of the operator.
+The Grouping Node only requires one attribute, the expression that is to be grouped.
+
+It's important to note that all of these nodes return only string values as it helps to test and compares AST trees.
+
+Essant currently supports all the listed operators and their token types in their exact grammer:
++ as PLUS
+- as MINUS
+* as STAR
+/ as SLASH
+% as PERCENT (Note that this isnt modulo)
+= as EQUAL
+== as EQUAL_EQUAL
+! as EXCLAMATION
+!= as EXCLAMATION_EQUAL
+< as LESS
+<= as LESS_EQUAL
+> as GREATER 
+>= as GREATER_EQUAL
+and as an added bonus:
+or as OR
+and as AND
+
+
+
+The testing should be very straightforward as they import all the classes needed, 
+and there is a function that compares what the ASTPrinter prints out to the expected answer (which is hard coded into it)
+There is a test created for testing each operator specified above, a couple for all the different types of literals (mostly made for the booleans true and false as well as null)
+tests for nested binary, nested unary, and grouping inside a binary expression.
+
+All of the tests provided in Lab #2 Tests.py passed during my testing
+
+So the tests should cover all test cases specified.
