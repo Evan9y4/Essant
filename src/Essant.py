@@ -3,6 +3,8 @@
 #Importing sys so we can use the commmand line
 import sys
 from EssantScanner import Scanner
+from EssantParser import Parser
+from EssantAST import ASTPrinter
 
 
 # The interpreter
@@ -45,6 +47,13 @@ class Essant:
         print(source)
         scanner = Scanner(source, self.error_handler)
         tokens = scanner.scan_tokens()
+
+        parser = Parser(tokens)
+        expression = parser.parse()
+
+        if expression is not None:
+            printer = ASTPrinter()
+            print(printer.print(expression))
 
         for token in tokens:
             print(token)
