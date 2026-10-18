@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>00b4d44d-8e30-4cc3-84f5-6becf5095b75</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Essant.py</StartupFile>
+    <StartupFile>Lab #2 Tests.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
