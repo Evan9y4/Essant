@@ -2,7 +2,8 @@
 
 
 #Import neccasary classes
-from EssantAST import Literal, Unary, Binary, Grouping
+from EssantAST import Literal, Unary, Binary, Grouping, Expression, Print
+from EssantErrors import ErrorHandler
 
 
 #This class is for error handling
@@ -21,19 +22,56 @@ class Parser:
     #Parses one complete expression
     def parse(self):
         
-        try:
-            expression = self.expression()
+        #create an empty list
+        statements = []
 
-            #
-            if not self.last_token():
-                raise self.error(self.look(), "Unexpected trailing token.")
+        #While we are not at the last token, if the statement is not None, add it to our list
+        while not self.last_token():
 
-            return expression
+            try:
+
+                statement = self.statement()
+
+                if statement is not None:
+                    statements.append(statement)
 
 
-        except ParseError as error:
-            print(error)
-            return None
+            #If we get an error, print it and recover
+            except ParseError as error:
+                print(error)
+                self.recover()
+
+        #return list
+        return statements
+
+
+    # simply determines the statement type
+    def statement(self):
+
+        if self.match("PRINT"):
+            return self.print_statement()
+
+        return self.expression_statement()
+
+
+    #handles expression statements
+    def expression_statement(self):
+
+        expression = self.expression()
+
+        self.consume("SEMICOLON", "Expected ; after expression.")
+
+        return Expression(expression)
+
+
+    #handles expression statements
+    def print_statement(self):
+
+        expression = self.expression()
+
+        self.consume("SEMICOLON", "Expected ; after expression.")
+
+        return Print(expression)
 
 
     #Method for handling expressions. Expression -> equality
@@ -102,7 +140,7 @@ class Parser:
         return self.primary()
 
 
-    #Method for hnadling primaries, which will be literals and groups
+    #Method for handling primaries, which will be literals and groups
     def primary(self):
         if self.match("FALSE"):
             return Literal(False)
@@ -188,3 +226,21 @@ class Parser:
             location = f"at '{token.lexeme}'"
 
         return ParseError(f"[Line {token.line}] Error {location}: {message}")
+
+
+    #Recovery from parsing error
+    def recover(self):
+
+        #while we are not at the last token
+        while not self.last_token():
+
+            #The previous statment (the one with the error!) has ended
+            if self.previous().token_type == "SEMICOLON":
+                return
+
+            #A new statment, which can be started with any of the following token types, is detected
+            if self.look().token_type in ("PRINT", "FALSE", "TRUE", "NULL", "NUMBER", "STRING", "LEFT_PAREN", "EXCLAMATION", "MINUS"):
+                return
+
+            #Keep advancing until we end the previous statment or a new one begins
+            self.advance()

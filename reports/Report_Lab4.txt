@@ -1,0 +1,16 @@
+For the first test case, it gave the following output:
+
+[Line 2] Error at 'true': Expected ; after expression.
+[Line 4] Error at 'print': Expected an expression
+
+It produced two errors for the statement with no semicolon and the statement with no second operand
+It also evaluated the expression statement, but since there was no print statement, it doesn't show up in the output
+
+The second test case gave the following:
+
+one
+True
+3
+None
+
+The two expression statements get no output and the four print statements are successfully executed.

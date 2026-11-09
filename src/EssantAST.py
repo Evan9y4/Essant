@@ -6,6 +6,10 @@ class Expr:
     pass
 
 
+# Base class: Statements
+class Statement:
+    pass
+
 # Class for Literal values
 class Literal(Expr):
 
@@ -35,6 +39,21 @@ class Grouping(Expr):
 
     def __init__(self, expression):
         self.expression = expression
+
+
+# Class for expression statements
+class Expression(Statement):
+
+    def __init__(self, expression):
+        self.expression = expression
+
+
+# Class for print statements
+class Print(Statement):
+
+    def __init__(self, expression):
+        self.expression = expression
+
 
 
 

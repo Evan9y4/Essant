@@ -2,9 +2,10 @@
 
 #Importing sys so we can use the commmand line
 import sys
+from EssantErrors import ErrorHandler
 from EssantScanner import Scanner
 from EssantParser import Parser
-from EssantAST import ASTPrinter
+from EssantEvaluator import Evaluator
 
 
 # The interpreter
@@ -44,30 +45,37 @@ class Essant:
 
     #This is where we actually "run" the language
     def run(self, source):
-        print(source)
+
+        #We put this here to to reset any errors we experience as this is a new run
+        self.error_handler.has_error = False
+
+        #Convert the source code into tokens
         scanner = Scanner(source, self.error_handler)
         tokens = scanner.scan_tokens()
 
+
+        #If we detect an error, stop the program
+        if self.error_handler.has_error:
+            return
+
+        #Give the tokens to the parser so we can form an AST Tree
         parser = Parser(tokens)
-        expression = parser.parse()
+        statements = parser.parse()
 
-        if expression is not None:
-            printer = ASTPrinter()
-            print(printer.print(expression))
+        #If we detect an error, stop the program
+        if self.error_handler.has_error:
+            return
 
-        for token in tokens:
-            print(token)
+        #Give the AST to the evaluator so it may evaluate
+        evaluator = Evaluator(self.error_handler)
+        
+        #execute each statement one by one
+        for statement in statements:
+            evaluator.execute(statement)
 
-
-#This is the class that handles all the errors
-class ErrorHandler:
-    def __init__(self):
-        self.has_error = False
-
-    #Print given message and set error to true (which does nothing for now)
-    def error(self, message):
-        self.has_error = True
-        print(message)
+            #Remember to handle any errors during runtime
+            if self.error_handler.has_error:
+                break
 
 
 #Run our interpreter

@@ -1,5 +1,9 @@
 #Code for the scanner and tokens (as of now)
 
+#Import the error handler
+from EssantErrors import ErrorHandler
+
+
 #Tokens created by the scanner
 class Token:
     def __init__(self, token_type, lexeme, literal, line):
